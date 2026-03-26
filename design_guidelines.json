@@ -1,0 +1,136 @@
+{
+  "theme": "LIGHT",
+  "archetype": "1 (Organic & Earthy)",
+  "global_design_principles": [
+    "Mobile-first architecture: Ensure all primary actions (Cart, Checkout, Order Now) are accessible via bottom sticky areas on mobile.",
+    "Premium SaaS-style UI: Use flat surfaces with subtle 1px borders instead of heavy drop shadows.",
+    "Frictionless checkout: Minimize clicks, keep forms simple (Name, Phone, Optional Address).",
+    "Generous spacing: Use p-4 to p-8 generously to let the food imagery breathe.",
+    "Accessibility: Ensure high contrast for all text and interactive elements (APCA/WCAG standards)."
+  ],
+  "typography": {
+    "font_strategy": "The 'Soft Utility' approach: Modern display font for headings to convey a premium feel, paired with a clean geometric sans for body text to ensure readability.",
+    "heading_font": "Cabinet Grotesk",
+    "body_font": "Satoshi",
+    "hierarchy": {
+      "h1": "text-4xl sm:text-5xl tracking-tight font-bold text-stone-900",
+      "h2": "text-2xl sm:text-3xl tracking-tight font-semibold text-stone-900",
+      "h3": "text-xl sm:text-2xl font-medium text-stone-800",
+      "h4": "text-lg sm:text-xl font-medium text-stone-800",
+      "body": "text-base text-stone-600 leading-relaxed",
+      "small": "text-sm text-stone-500",
+      "overline": "text-xs tracking-[0.2em] uppercase font-bold text-stone-500"
+    }
+  },
+  "colors": {
+    "background": {
+      "default": "#FAFAFA",
+      "surface": "#FFFFFF",
+      "muted": "#F5F5F4"
+    },
+    "text": {
+      "primary": "#1C1917",
+      "secondary": "#57534E",
+      "muted": "#A8A29E"
+    },
+    "primary": {
+      "default": "#E15A32",
+      "hover": "#C84B26",
+      "foreground": "#FFFFFF"
+    },
+    "accent": {
+      "default": "#FCD34D",
+      "foreground": "#78350F"
+    },
+    "status": {
+      "success": "#22C55E",
+      "warning": "#F59E0B",
+      "error": "#EF4444",
+      "info": "#3B82F6"
+    },
+    "border": "#E7E5E4"
+  },
+  "layout_and_spacing": {
+    "container": "max-w-7xl mx-auto px-4 sm:px-6 lg:px-8",
+    "section_spacing": "py-12 sm:py-16 lg:py-24",
+    "element_spacing": "gap-4 sm:gap-6",
+    "border_radius": "rounded-2xl",
+    "grid_strategies": {
+      "menu_items": "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6",
+      "admin_dashboard": "grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-4"
+    }
+  },
+  "surface_strategies": {
+    "cards": "bg-white border border-stone-200 rounded-2xl shadow-sm hover:shadow-md transition-shadow duration-200",
+    "sticky_nav": "bg-white/80 backdrop-blur-xl border-b border-stone-200 sticky top-0 z-50",
+    "sticky_bottom_bar": "bg-white border-t border-stone-200 fixed bottom-0 left-0 right-0 z-50 p-4 pb-safe",
+    "admin_panels": "bg-white border border-stone-200 rounded-xl",
+    "buttons": "rounded-full font-medium transition-all duration-200 active:scale-[0.98]"
+  },
+  "components": {
+    "primary_button": "bg-[#E15A32] text-white hover:bg-[#C84B26] px-6 py-3 rounded-full flex items-center justify-center gap-2",
+    "secondary_button": "bg-stone-100 text-stone-900 hover:bg-stone-200 px-6 py-3 rounded-full flex items-center justify-center gap-2",
+    "item_card": "flex flex-row sm:flex-col overflow-hidden bg-white border border-stone-200 rounded-2xl",
+    "category_pill": "px-4 py-2 rounded-full border border-stone-200 whitespace-nowrap text-sm font-medium hover:bg-stone-50 transition-colors cursor-pointer",
+    "category_pill_active": "px-4 py-2 rounded-full bg-stone-900 text-white whitespace-nowrap text-sm font-medium cursor-pointer",
+    "quantity_selector": "flex items-center gap-3 bg-stone-100 rounded-full px-2 py-1",
+    "input_field": "w-full rounded-xl border border-stone-300 bg-white px-4 py-3 text-base text-stone-900 focus:border-[#E15A32] focus:outline-none focus:ring-1 focus:ring-[#E15A32]",
+    "status_badge_new": "bg-blue-100 text-blue-800 px-2 py-1 rounded-md text-xs font-semibold",
+    "status_badge_preparing": "bg-amber-100 text-amber-800 px-2 py-1 rounded-md text-xs font-semibold",
+    "status_badge_ready": "bg-green-100 text-green-800 px-2 py-1 rounded-md text-xs font-semibold"
+  },
+  "interactions_and_motion": {
+    "hover_states": "Buttons and cards should scale down slightly (scale-98) on click. Hovering over item cards should slightly lift them or reveal an add-to-cart button.",
+    "page_transitions": "Use Framer Motion for simple fade-ins (opacity: 0 -> 1, y: 10 -> 0) on mount.",
+    "list_animations": "Stagger children entrance animations for menu items.",
+    "cart_updates": "Briefly highlight or bounce the cart icon when an item is added."
+  },
+  "media": {
+    "hero_image": {
+      "url": "https://static.prod-images.emergentagent.com/jobs/2095418a-30a2-45f4-990c-e422fc73b1d8/images/7ddfcdd67a00bfe5ceb128bb166c3d1b88a1f087b1b4857023a4a77512116f96.png",
+      "description": "Premium restaurant interior for the hero background",
+      "usage": "Landing page hero section background with a dark/gradient overlay"
+    },
+    "promo_banner": {
+      "url": "https://static.prod-images.emergentagent.com/jobs/2095418a-30a2-45f4-990c-e422fc73b1d8/images/ddb33f80f23ca5830c706e5f839774ae7e61d85c00e2fe09d99cd1a23ac1a4dd.png",
+      "description": "Minimalist dining table setting",
+      "usage": "Placeholder for promotional banners or empty cart state"
+    },
+    "categories": {
+      "burger": {
+        "url": "https://images.pexels.com/photos/36594622/pexels-photo-36594622.jpeg",
+        "description": "Gourmet burger close-up"
+      },
+      "pizza": {
+        "url": "https://images.pexels.com/photos/36713220/pexels-photo-36713220.jpeg",
+        "description": "Neapolitan pizza slice"
+      },
+      "salad": {
+        "url": "https://images.pexels.com/photos/35241090/pexels-photo-35241090.jpeg",
+        "description": "Fresh healthy salad bowl"
+      }
+    }
+  },
+  "icons": {
+    "library": "lucide-react",
+    "stroke_width": 2,
+    "size_default": 24,
+    "size_small": 16
+  },
+  "admin_specific_rules": {
+    "layout": "Dense bento-grid style dashboard. Remove glassmorphism, use solid backgrounds.",
+    "real_time_feed": "Highlight new incoming orders with a brief subtle yellow flash or border animation.",
+    "data_density": "Use tighter padding (p-3 or p-4) in tables and lists to fit more information on screen.",
+    "sound": "Implement a subtle browser 'ding' sound on new order arrival, with a toggle to mute."
+  },
+  "testing": {
+    "data_testid_convention": "All interactive elements MUST use kebab-case data-testid attributes indicating their role (e.g., 'order-now-button', 'add-to-cart-btn', 'checkout-form-submit')."
+  },
+  "instructions_to_main_agent": [
+    "Build the customer-facing view strictly mobile-first. The cart should be a sticky bottom bar or accessible via a floating action button on mobile.",
+    "Use standard HTML inputs for simple text forms (name, phone), but utilize Shadcn for complex components like Dialogs or Tabs.",
+    "Implement the 'Order Status' states clearly using the colors defined in the status palette.",
+    "Do NOT use 'Inter' for headings. Ensure 'Cabinet Grotesk' is loaded for headings and 'Satoshi' for body text.",
+    "Make sure the Admin Dashboard has a polling mechanism (e.g., setInterval) for new orders, as requested in the functionalities."
+  ]
+}
