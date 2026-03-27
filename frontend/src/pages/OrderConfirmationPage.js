@@ -1,6 +1,8 @@
 import { useState, useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
 import { fetchOrder } from "@/lib/api";
+import { formatPrice } from "@/lib/format";
+import { STATUS_CONFIG, PROGRESS_STEPS } from "@/config/orderStatuses";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
@@ -11,22 +13,9 @@ import {
   Phone,
   ArrowLeft,
   Flame,
-  Package,
-  ChefHat,
   Loader2,
   XCircle,
 } from "lucide-react";
-
-const STATUS_CONFIG = {
-  new: { label: "Order Placed", color: "bg-blue-100 text-blue-800", icon: Package, step: 1 },
-  accepted: { label: "Accepted", color: "bg-indigo-100 text-indigo-800", icon: CheckCircle, step: 2 },
-  preparing: { label: "Preparing", color: "bg-amber-100 text-amber-800", icon: ChefHat, step: 3 },
-  ready: { label: "Ready", color: "bg-green-100 text-green-800", icon: CheckCircle, step: 4 },
-  completed: { label: "Completed", color: "bg-green-100 text-green-800", icon: CheckCircle, step: 5 },
-  rejected: { label: "Rejected", color: "bg-red-100 text-red-800", icon: XCircle, step: 0 },
-};
-
-const STEPS = ["Placed", "Accepted", "Preparing", "Ready"];
 
 export default function OrderConfirmationPage() {
   const { orderId } = useParams();
@@ -42,7 +31,7 @@ export default function OrderConfirmationPage() {
         .finally(() => setLoading(false));
     };
     load();
-    // Poll for updates every 10s
+    // Poll for status updates every 10s
     const interval = setInterval(() => {
       fetchOrder(orderId).then(setOrder).catch(() => {});
     }, 10000);
@@ -94,7 +83,7 @@ export default function OrderConfirmationPage() {
       </nav>
 
       <div className="max-w-2xl mx-auto px-4 py-8">
-        {/* Success Banner */}
+        {/* Status Banner */}
         <div
           data-testid="order-confirmation-banner"
           className={`rounded-2xl p-6 text-center mb-6 animate-fade-in-up ${
@@ -121,9 +110,13 @@ export default function OrderConfirmationPage() {
 
         {/* Progress Tracker */}
         {!isRejected && order.status !== "completed" && (
-          <div data-testid="order-progress-tracker" className="bg-white border border-stone-200 rounded-2xl p-6 mb-6 animate-fade-in-up" style={{ animationDelay: "0.1s" }}>
+          <div
+            data-testid="order-progress-tracker"
+            className="bg-white border border-stone-200 rounded-2xl p-6 mb-6 animate-fade-in-up"
+            style={{ animationDelay: "0.1s" }}
+          >
             <div className="flex items-center justify-between mb-4">
-              {STEPS.map((step, idx) => {
+              {PROGRESS_STEPS.map((step, idx) => {
                 const stepNum = idx + 1;
                 const isActive = currentStep >= stepNum;
                 const isCurrent = currentStep === stepNum;
@@ -131,9 +124,7 @@ export default function OrderConfirmationPage() {
                   <div key={step} className="flex-1 flex flex-col items-center relative">
                     <div
                       className={`h-8 w-8 rounded-full flex items-center justify-center text-xs font-bold transition-all ${
-                        isActive
-                          ? "bg-[#E15A32] text-white"
-                          : "bg-stone-100 text-stone-400"
+                        isActive ? "bg-[#E15A32] text-white" : "bg-stone-100 text-stone-400"
                       } ${isCurrent ? "ring-4 ring-[#E15A32]/20" : ""}`}
                     >
                       {stepNum}
@@ -141,7 +132,7 @@ export default function OrderConfirmationPage() {
                     <span className={`text-xs mt-2 ${isActive ? "text-stone-900 font-medium" : "text-stone-400"}`}>
                       {step}
                     </span>
-                    {idx < STEPS.length - 1 && (
+                    {idx < PROGRESS_STEPS.length - 1 && (
                       <div
                         className={`absolute top-4 left-[calc(50%+16px)] right-[calc(-50%+16px)] h-0.5 ${
                           currentStep > stepNum ? "bg-[#E15A32]" : "bg-stone-200"
@@ -162,7 +153,10 @@ export default function OrderConfirmationPage() {
         )}
 
         {/* Order Details */}
-        <div className="bg-white border border-stone-200 rounded-2xl p-6 mb-6 animate-fade-in-up" style={{ animationDelay: "0.2s" }}>
+        <div
+          className="bg-white border border-stone-200 rounded-2xl p-6 mb-6 animate-fade-in-up"
+          style={{ animationDelay: "0.2s" }}
+        >
           <div className="flex items-center justify-between mb-4">
             <h3 className="font-semibold text-stone-900" style={{ fontFamily: "'Cabinet Grotesk', sans-serif" }}>
               Order Details
@@ -183,7 +177,7 @@ export default function OrderConfirmationPage() {
                     <p className="text-stone-400 text-xs">+ {item.add_ons.map((a) => a.name).join(", ")}</p>
                   )}
                 </div>
-                <span className="text-stone-700 font-medium">${(item.price * item.quantity).toFixed(2)}</span>
+                <span className="text-stone-700 font-medium">{formatPrice(item.price * item.quantity)}</span>
               </div>
             ))}
           </div>
@@ -192,19 +186,20 @@ export default function OrderConfirmationPage() {
 
           <div className="flex justify-between text-base font-bold">
             <span className="text-stone-900">Total</span>
-            <span className="text-[#E15A32]">${order.total.toFixed(2)}</span>
+            <span className="text-[#E15A32]">{formatPrice(order.total)}</span>
           </div>
         </div>
 
         {/* Customer Info */}
-        <div className="bg-white border border-stone-200 rounded-2xl p-6 animate-fade-in-up" style={{ animationDelay: "0.3s" }}>
+        <div
+          className="bg-white border border-stone-200 rounded-2xl p-6 animate-fade-in-up"
+          style={{ animationDelay: "0.3s" }}
+        >
           <h3 className="font-semibold text-stone-900 mb-3" style={{ fontFamily: "'Cabinet Grotesk', sans-serif" }}>
             {order.order_type === "delivery" ? "Delivery" : "Pickup"} Info
           </h3>
           <div className="space-y-2 text-sm text-stone-600">
-            <p className="flex items-center gap-2">
-              <span className="font-medium text-stone-900">{order.customer_name}</span>
-            </p>
+            <p className="font-medium text-stone-900">{order.customer_name}</p>
             <p className="flex items-center gap-2">
               <Phone className="h-4 w-4 text-stone-400" /> {order.customer_phone}
             </p>
@@ -213,7 +208,7 @@ export default function OrderConfirmationPage() {
                 <MapPin className="h-4 w-4 text-stone-400" /> {order.customer_address}
               </p>
             )}
-            <p className="flex items-center gap-2">
+            <p>
               <Badge className="bg-stone-100 text-stone-600 border-stone-200 text-xs">Cash on Delivery</Badge>
             </p>
           </div>
