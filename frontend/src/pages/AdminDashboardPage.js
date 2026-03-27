@@ -14,6 +14,7 @@ import { Switch } from "@/components/ui/switch";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import StatCard from "@/components/admin/StatCard";
 import OrderCard from "@/components/admin/OrderCard";
+import MenuManagement from "@/components/admin/MenuManagement";
 import {
   Flame,
   LogOut,
@@ -24,6 +25,7 @@ import {
   Volume2,
   VolumeX,
   RefreshCw,
+  UtensilsCrossed,
 } from "lucide-react";
 import { toast } from "sonner";
 
@@ -54,6 +56,7 @@ export default function AdminDashboardPage() {
   const [stats, setStats] = useState(null);
   const [settings, setSettingsState] = useState(null);
   const [activeTab, setActiveTab] = useState("all");
+  const [activeSection, setActiveSection] = useState("orders");
   const [soundEnabled, setSoundEnabled] = useState(true);
   const [refreshing, setRefreshing] = useState(false);
   const prevOrderCount = useRef(0);
@@ -194,6 +197,30 @@ export default function AdminDashboardPage() {
       </nav>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 py-6">
+        {/* Section Switcher */}
+        <div className="flex gap-2 mb-6">
+          <button
+            onClick={() => setActiveSection("orders")}
+            className={`flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium transition-all ${
+              activeSection === "orders"
+                ? "bg-stone-900 text-white"
+                : "border border-stone-200 text-stone-600 hover:bg-stone-50"
+            }`}
+          >
+            <ShoppingCart className="h-4 w-4" /> Orders
+          </button>
+          <button
+            onClick={() => setActiveSection("menu")}
+            className={`flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium transition-all ${
+              activeSection === "menu"
+                ? "bg-stone-900 text-white"
+                : "border border-stone-200 text-stone-600 hover:bg-stone-50"
+            }`}
+          >
+            <UtensilsCrossed className="h-4 w-4" /> Menu
+          </button>
+        </div>
+
         {/* Stats Cards */}
         <div data-testid="admin-stats" className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
           <StatCard
@@ -222,8 +249,15 @@ export default function AdminDashboardPage() {
           />
         </div>
 
+        {/* Menu Management */}
+        {activeSection === "menu" && (
+          <div className="bg-white border border-stone-200 rounded-xl p-5">
+            <MenuManagement />
+          </div>
+        )}
+
         {/* Orders Feed */}
-        <div className="bg-white border border-stone-200 rounded-xl">
+        {activeSection === "orders" && <div className="bg-white border border-stone-200 rounded-xl">
           <div className="p-4 border-b border-stone-200">
             <Tabs value={activeTab} onValueChange={setActiveTab}>
               <TabsList className="bg-stone-100 rounded-lg">
@@ -260,7 +294,7 @@ export default function AdminDashboardPage() {
               ))
             )}
           </div>
-        </div>
+        </div>}
       </div>
     </div>
   );

@@ -44,8 +44,9 @@ const DEMO_ORDERS = [
   { id: "demo-3", order_number: 1040, customer_name: "Stefan Nikolić", customer_phone: "+381 65 555 0000", customer_address: "Terazije 5, Beograd", order_type: "delivery", status: "completed", total: 54.96, subtotal: 54.96, created_at: new Date(Date.now() - 90 * 60000).toISOString(), estimated_prep_time: 25, items: [{ name: "Pepperoni Supreme", quantity: 2, price: 16.99, add_ons: [] }, { name: "Tiramisu", quantity: 2, price: 8.99, add_ons: [] }] },
 ];
 
-// In-memory order store for the demo session
+// In-memory stores for the demo session
 let sessionOrders = [...DEMO_ORDERS];
+let sessionMenuItems = MENU_ITEMS.map((i) => ({ ...i, available: true }));
 let orderCounter = 1043;
 let sessionSettings = { ...SETTINGS };
 
@@ -53,8 +54,9 @@ let sessionSettings = { ...SETTINGS };
 
 export const fetchMenu = async () => {
   await delay();
-  const categories = [...new Set(MENU_ITEMS.map((i) => i.category))].sort();
-  return { items: MENU_ITEMS, categories };
+  const available = sessionMenuItems.filter((i) => i.available !== false);
+  const categories = [...new Set(available.map((i) => i.category))].sort();
+  return { items: available, categories };
 };
 
 export const fetchSettings = async () => {
@@ -124,4 +126,38 @@ export const updateSettings = async (data) => {
   await delay(300);
   sessionSettings = { ...sessionSettings, ...data };
   return { ...sessionSettings };
+};
+
+// ─── Admin Menu Management ───────────────────────────────────────────
+
+export const fetchAdminMenu = async () => {
+  await delay(200);
+  return { items: [...sessionMenuItems] };
+};
+
+export const addMenuItem = async (data) => {
+  await delay(400);
+  const item = {
+    ...data,
+    id: `item-${Date.now()}`,
+    available: true,
+    is_popular: data.is_popular || false,
+    add_ons: data.add_ons || [],
+  };
+  sessionMenuItems = [item, ...sessionMenuItems];
+  return item;
+};
+
+export const toggleMenuItemAvailable = async (id, available) => {
+  await delay(200);
+  sessionMenuItems = sessionMenuItems.map((i) =>
+    i.id === id ? { ...i, available } : i
+  );
+  return sessionMenuItems.find((i) => i.id === id);
+};
+
+export const deleteMenuItem = async (id) => {
+  await delay(300);
+  sessionMenuItems = sessionMenuItems.filter((i) => i.id !== id);
+  return { ok: true };
 };
