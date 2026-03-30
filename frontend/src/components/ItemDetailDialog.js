@@ -40,8 +40,8 @@ export default function ItemDetailDialog({ item, open, onClose, disabled }) {
   return (
     <Dialog open={open} onOpenChange={onClose}>
       <DialogContent className="sm:max-w-lg p-0 overflow-hidden rounded-2xl max-h-[90vh] overflow-y-auto">
-        <div className="relative h-52 sm:h-64 overflow-hidden">
-          <img src={item.image_url} alt={item.name} className="w-full h-full object-cover" />
+        <div className="relative aspect-[16/9] overflow-hidden">
+          <img src={item.image_url} alt={item.name} className="absolute inset-0 w-full h-full object-cover object-center" />
           {item.is_popular && (
             <div className="absolute top-3 left-3">
               <Badge className="bg-[#FCD34D] text-[#78350F] border-0 text-xs font-bold flex items-center gap-1">

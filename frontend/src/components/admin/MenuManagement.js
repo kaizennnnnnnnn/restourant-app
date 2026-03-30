@@ -132,18 +132,20 @@ export default function MenuManagement() {
               item.available ? "border-stone-200 opacity-100" : "border-stone-100 opacity-50"
             }`}
           >
-            {item.image_url ? (
-              <img
-                src={item.image_url}
-                alt={item.name}
-                className="w-full h-36 object-cover"
-                loading="lazy"
-              />
-            ) : (
-              <div className="w-full h-36 bg-stone-100 flex items-center justify-center text-stone-300 text-sm">
-                No image
-              </div>
-            )}
+            <div className="relative aspect-[4/3] overflow-hidden">
+              {item.image_url ? (
+                <img
+                  src={item.image_url}
+                  alt={item.name}
+                  className="absolute inset-0 w-full h-full object-cover object-center"
+                  loading="lazy"
+                />
+              ) : (
+                <div className="absolute inset-0 bg-stone-100 flex items-center justify-center text-stone-300 text-sm">
+                  No image
+                </div>
+              )}
+            </div>
             <div className="p-3">
               <div className="flex items-start justify-between gap-2 mb-1">
                 <h4 className="font-semibold text-stone-900 text-sm leading-tight">{item.name}</h4>

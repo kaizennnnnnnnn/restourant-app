@@ -20,11 +20,11 @@ export default function MenuItemCard({ item, onDetail, disabled }) {
       className="bg-white border border-stone-200 rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-shadow duration-200 cursor-pointer group"
       onClick={onDetail}
     >
-      <div className="relative overflow-hidden h-48">
+      <div className="relative overflow-hidden aspect-[4/3]">
         <img
           src={item.image_url}
           alt={item.name}
-          className="w-full h-full object-cover menu-item-image"
+          className="absolute inset-0 w-full h-full object-cover object-center menu-item-image"
           loading="lazy"
         />
         {item.is_popular && (
